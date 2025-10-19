@@ -1,19 +1,17 @@
-# 🔐 Guía de Tipos de Keychain en iOS
+### 🔐 Guía de Tipos de Keychain en iOS
 
 Esta guía explica los principales tipos (`kSecClass`) del **Keychain** en iOS y macOS, sus usos, atributos y ejemplos de implementación.
 
----
 
-## 📘 ¿Qué es el Keychain?
+### 📘 ¿Qué es el Keychain?
 
 El **Keychain** es el sistema de almacenamiento seguro de Apple.  
 Permite guardar información sensible (contraseñas, tokens, certificados, claves privadas, etc.) de forma **cifrada y persistente**.
 
 Cada elemento guardado pertenece a una **clase (`kSecClass`)** que define el tipo de dato y sus atributos válidos.
 
----
 
-## 🔑 Tipos principales de `kSecClass`
+### 🔑 Tipos principales de `kSecClass`
 
 | Tipo | Qué almacena | Ejemplo de uso |
 |------|---------------|----------------|
@@ -23,9 +21,8 @@ Cada elemento guardado pertenece a una **clase (`kSecClass`)** que define el tip
 | `kSecClassKey` | Claves criptográficas | RSA, EC, AES |
 | `kSecClassIdentity` | Certificado + clave privada | Importar `.p12`, `.pfx` |
 
----
 
-## 1️⃣ `kSecClassGenericPassword`
+### 1️⃣ `kSecClassGenericPassword`
 **Contraseñas o datos genéricos (la más común).**
 
 Usada para guardar información sensible no asociada a servidores (tokens, credenciales locales).
@@ -39,9 +36,8 @@ let query = [
 SecItemAdd(query, nil)
 ```
 
----
 
-## 2️⃣ `kSecClassInternetPassword`
+### 2️⃣ `kSecClassInternetPassword`
 **Credenciales de servicios de Internet.**
 
 Permite asociar usuario, servidor, protocolo y puerto a una contraseña de red.
@@ -57,9 +53,8 @@ let query = [
 SecItemAdd(query, nil)
 ```
 
----
 
-## 3️⃣ `kSecClassCertificate`
+### 3️⃣ `kSecClassCertificate`
 **Certificados digitales (.cer, .der).**
 
 Representa un certificado X.509 (solo parte pública).  
@@ -77,9 +72,8 @@ let query = [
 SecItemAdd(query, nil)
 ```
 
----
 
-## 4️⃣ `kSecClassKey`
+### 4️⃣ `kSecClassKey`
 **Claves criptográficas (pública o privada).**
 
 Permite guardar claves generadas o importadas para cifrar, firmar o verificar datos.
@@ -97,9 +91,8 @@ if let privateKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error) {
 }
 ```
 
----
 
-## 5️⃣ `kSecClassIdentity`
+### 5️⃣ `kSecClassIdentity`
 **Certificado + clave privada (identidad completa).**
 
 Asocia el certificado público con su clave privada.  
@@ -120,9 +113,7 @@ let query = [
 SecItemAdd(query, nil)
 ```
 
----
-
-## ⚙️ Consejos prácticos
+### ⚙️ Consejos prácticos
 
 - En el **90% de los casos**, usarás `kSecClassGenericPassword`.
 - Cada tipo de `kSecClass` acepta distintos atributos (`kSecAttr...`).
@@ -130,14 +121,12 @@ SecItemAdd(query, nil)
 - Los datos del Keychain están cifrados por el sistema y persisten entre reinicios.
 - Puedes compartir el Keychain entre apps usando `kSecAttrAccessGroup`.
 
----
 
-## 📘 Referencias oficiales
+### 📘 Referencias oficiales
 
 - [Apple Developer – Keychain Services](https://developer.apple.com/documentation/security/keychain_services)
 - [SecItem – Keychain Items API](https://developer.apple.com/documentation/security/keychain_services/keychain_items)
 
----
 
 ✍️ **Autor:** Eduardo Fulgencio  
 📅 **Actualizado:** Octubre 2025  
